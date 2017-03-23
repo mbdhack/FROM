@@ -21,10 +21,11 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var otherButton: UIButton!
     @IBOutlet weak var startGame: UIButton!
     
+    let score = UserDefaults.standard
+    var instance = GameViewController()
+    
     
     // MARK: - life Cycle
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         APIcall()
@@ -35,12 +36,23 @@ class LandingViewController: UIViewController {
     func APIcall(){
         GameModel.gameShareInstance.downloadAthlets {
             GameModel.gameShareInstance.downloadAthletsCollege {
-              GameModel.gameShareInstance.testIdea()
+               
+                GameModel.gameShareInstance.QuestionAnswerStructure()
+                
             }
         }
     }
     
-    //func IbouletFrameSetup(){}
+    func retriveData(){
+        //for item in score.value(forKey: "highScore") {
+        
+       // }
+        if let highScore = score.value(forKey: "highScore") {
+           self.highestStreak.text = "\(highScore)"
+        } else {
+           self.latestStreak.text = "\(instance.current_score)"
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -56,6 +68,14 @@ class LandingViewController: UIViewController {
         
         
     }
+    
+    @IBAction func viewHighScore(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let vc = storyboard.instantiateViewController(withIdentifier: "nextViewTopPlayer")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    
     /*
     // MARK: - Navigation
 

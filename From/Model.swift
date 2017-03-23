@@ -9,27 +9,41 @@
 import Foundation
 import Alamofire
 import GameplayKit
+import UIKit
 
-public class GameModel {
-    var playerName : String!
-    var currentStreak: Int!
-    var CollegeName: String!
-    var UserName : String!
-    var topPlayer : String!
-    var dictAthletsResult = [[String:AnyObject]]()
-    var collegeNAme = [AnyObject]()
-    var athletesCorrect = [String:String]()
-    var testNew = [[String:AnyObject]]()
-    var new001 = [String:AnyObject]()
-    static var gameShareInstance = GameModel()
+struct Score {
+    var name : String!
+    var score: Int!
+}
+
+public class URLEndpoint{
     let baseUrl = "https://from.blubeta.com/api"
     let atheletsEndpoint = "/Athletes"
     let atheletsCollegeEndpoint = "/Athletes/colleges"
-    init() {
+    let topPlayerEndPoint = "/Players/top20"
+    let postEndpoint = "/Players"
+
+}
+public class GameModel:URLEndpoint {
+    var playerName : String!
+    var CollegeName: String!
+    var highestScore : Int!
+    var currentStreak: Int
+    var userSocre = [Int]()
+    var dictAthletsResult = [[String:AnyObject]]()
+    var collegeNameArray = [AnyObject]()
+    var athletesCorrect = [String:String]()
+    var finalData = [[String:AnyObject]]()
+    var dictFinalData = [String:AnyObject]()
+    var topPlayerDict = [[String:AnyObject]]()
+    var keyCorrectAthlete = String ()
+    var keyCorrectCollege = String()
+    var topPlayerScore = [Score]()
+    static var gameShareInstance = GameModel()
+    override init() {
       playerName = ""
       currentStreak = 0
-      UserName = ""
-      topPlayer = ""
+      highestScore = 0
       CollegeName = ""
       }
 }
@@ -49,23 +63,37 @@ extension GameModel{
         Alamofire.request(apiCallUrl(baseurl: baseUrl, endpoint: atheletsCollegeEndpoint)).responseJSON { response in
             let result = response.result
             guard (result.value as? [String]) != nil else{return}
-            self.collegeNAme = (result.value)! as! [String] as [AnyObject]
+            self.collegeNameArray = (result.value)! as! [String] as [AnyObject]
             completed()
         }
     }
-    func testIdea (){
+    func QuestionAnswerStructure (){
         for item in dictAthletsResult{
-            var arrayThreeNumber = self.collegeNAme.choose(3)
-            let keyAthlete = item["athlete"] as! String
-            let valueCorrect = item["correct"] as! String
-            print( keyAthlete,valueCorrect)
-            self.athletesCorrect[keyAthlete] = valueCorrect
-            self.new001["Name"] = keyAthlete as AnyObject?
-            arrayThreeNumber.append(valueCorrect as AnyObject)
-            self.new001["Choices"] = arrayThreeNumber as AnyObject?
-            self.testNew.append(new001)
+            var arrayThreeNumber = self.collegeNameArray.choose(3)
+            keyCorrectAthlete = item[athleteKeyString] as! String
+            keyCorrectCollege = item[correctKeyString] as! String
+            print( keyCorrectAthlete,keyCorrectCollege)
+            self.dictFinalData["Name"] = keyCorrectAthlete as AnyObject?
+            arrayThreeNumber.append(keyCorrectCollege as AnyObject)
+            self.dictFinalData["Choices"] = arrayThreeNumber as AnyObject?
+            self.finalData.append(dictFinalData)
         }
-       
+    }
+    func gettToppalyer(completed: @escaping DownloadCompleted){
+        Alamofire.request(apiCallUrl(baseurl: baseUrl, endpoint: topPlayerEndPoint)).responseJSON { response in
+            let result = response.result
+            guard (result.value as? [[String:AnyObject]]) != nil else{return}
+            self.topPlayerDict = (result.value)! as! [[String : AnyObject]]
+            print(self.topPlayerDict)
+            for item in self.topPlayerDict {
+            self.playerName = item["name"] as! String
+            self.highestScore = item[streakKeyString] as! Int
+            self.topPlayerScore.append(Score(name:self.playerName  , score:self.highestScore))
+                //print(self.topPlayerScore)
+            }
+           
+            completed()
+        }
     }
 }
 extension Array {
