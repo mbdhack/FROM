@@ -9,3 +9,4 @@
 let startGameSegueIndentifier = "startGame"
 let topScoreCellIdentifier = "topScore"
 typealias DownloadCompleted = () -> ()
+typealias FuctionFinished = () -> ()

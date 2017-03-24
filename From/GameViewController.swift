@@ -25,7 +25,7 @@ class GameViewController: UIViewController {
     var count = 20
     var timer = Timer()
     var current_scoreArray = [Int]()
-    var texField: UITextField!
+    var textField: UITextField!
     var minutes = String()
     var seconds = String()
     var collegeNameRandomPicked = [[String]]()
@@ -56,22 +56,22 @@ class GameViewController: UIViewController {
         button3.layer.borderWidth = 3
         button4.layer.borderWidth = 3
     }
-    
     func askQuestion(_ action : UIAlertAction! = nil){
        let newChoice = GameModel.gameShareInstance.finalData.choose(1)
         print("Here is the choice\(newChoice)")
-            let question = newChoice[0]["Choices"] as! [String]
+            var question = newChoice[0]["Choices"] as! [String]
+            let randomChoice = question.shuffle()
             let name = newChoice[0]["Name"] as! String!
             self.playerName.text = name
-            button1.setTitle(question[0], for: UIControlState.normal)
-            button2.setTitle(question[1], for: UIControlState.normal)
-            button3.setTitle(question[2], for: UIControlState.normal)
-            button4.setTitle(question[3], for: UIControlState.normal)
+            button1.setTitle(randomChoice[0], for: UIControlState.normal)
+            button2.setTitle(randomChoice[1], for: UIControlState.normal)
+            button3.setTitle(randomChoice[2], for: UIControlState.normal)
+            button4.setTitle(randomChoice[3], for: UIControlState.normal)
     }
     func postData(completed: @escaping DownloadCompleted) {
         let parameters : Parameters = [
-            "name" : "\(self.texField.text)",
-            "streak" : "\(self.scoretosend)"
+            "name" : "\(self.textField!.text)",
+            "streak" : 200
         ]
         Alamofire.request("https://from.blubeta.com/api/Players", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
             switch(response.result) {
@@ -87,13 +87,15 @@ class GameViewController: UIViewController {
         }
     }
     func submit(_ action : UIAlertAction! = nil){
-        postData { 
-         print("Sent")
+        checkScore{
+        self.postData {
+        print("Sent")
+            }
         }
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
         let vc = storyboard.instantiateViewController(withIdentifier: "nextViewTopPlayer")
         self.present(vc, animated: true, completion: nil)
-    }
+      }
     func restart(_ action : UIAlertAction! = nil){
     let newtimber = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
     timerUpdate(timer:newtimber)
@@ -109,7 +111,7 @@ class GameViewController: UIViewController {
         self.present(ac, animated: true, completion: {
                 print("completion block")
        })
-       saveScoreLocal()
+       
         }else{
             minutes = String(count / 60)
             seconds = String(count % 60)
@@ -117,20 +119,15 @@ class GameViewController: UIViewController {
             count -= 1
         }
     }
-    
-    func checkScore (){
+    func checkScore(_: @escaping FuctionFinished){
         if current_score > 10 {
         self.scoretosend = current_score
         }
     }
-    func saveScoreLocal(){
-    UserDefaults.setValue(self.current_score, forKey: "LatestScore")
-    }
-    
     func configurationTextField(textfield: UITextField!){
-        if (textfield) != nil {
-            textfield.placeholder = enterYourName
-            texField = textfield
+        textfield.placeholder = enterYourName
+        if let unwrapped = textfield {
+           textField = unwrapped
         }
     }
     
@@ -144,7 +141,6 @@ class GameViewController: UIViewController {
                 GameModel.gameShareInstance.currentStreak =  self.current_score
                 let newtimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
                 timerUpdate(timer: newtimer)
-                checkScore ()
                 askQuestion()
             }else{
             print("no")
