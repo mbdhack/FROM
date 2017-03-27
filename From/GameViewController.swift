@@ -21,7 +21,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var playerName: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     
-    var count = 5
+    var count = 10
     var timer: Timer!
     var current_scoreArray = [Int]()
     var textField: UITextField!
@@ -32,7 +32,6 @@ class GameViewController: UIViewController {
     var current_score = 0
     var ac  = UIAlertController()
     var istance = GameModel()
-    var savescore = [String]()
     var scoretosend = 0
     let userDefaults = UserDefaults.standard
     override func viewDidLoad() {
@@ -102,13 +101,14 @@ class GameViewController: UIViewController {
     func startTimer() {
     timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
     }
-    func endTimer(_ action : UIAlertAction! = nil) {
+    func endTimer() {
     timer.invalidate()
     }
     func restartTimer(){
          endTimer()
-         count = 10
-         self.countL.text = "\(timeFormatted(count))"
+        count = 10
+         self.countL.text = "\(timeFormatted(self.count))"
+         self.saveScore()
     }
     func timeFormatted(_ totalSeconds: Int) -> String {
         let seconds: Int = totalSeconds % 60
@@ -122,12 +122,12 @@ class GameViewController: UIViewController {
         self.ac = UIAlertController(title: self.title, message: "\(scoreDisplayMessage) \(self.current_score)", preferredStyle: .alert)
         if checScoreStatus == true {
             self.ac.addTextField(configurationHandler: self.configurationTextField)
-            self.ac.addAction(UIAlertAction(title: "\(submitButtonTitlte)", style: .default, handler: self.submit))
+            self.ac.addAction(UIAlertAction(title: "😃\(submitButtonTitlte)", style: .default, handler: self.submit))
             self.present(self.ac, animated: true, completion: {
                 print("completion block")
             })
         }else {
-            self.ac.addAction(UIAlertAction(title:"\(restartButtonTitlte) again", style: .default, handler: { action in
+            self.ac.addAction(UIAlertAction(title:"☹️\(restartButtonTitlte)", style: .default, handler: { action in
                 self.restartTimer()
             }))
 
