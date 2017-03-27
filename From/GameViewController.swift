@@ -21,9 +21,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var playerName: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     
-    
-    var count = 20
-    var timer = Timer()
+    var count = 5
+    var timer: Timer!
     var current_scoreArray = [Int]()
     var textField: UITextField!
     var minutes = String()
@@ -38,12 +37,13 @@ class GameViewController: UIViewController {
     let userDefaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
     }
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(true)
       buttonDesign ()
-      timerUpdate(timer :timer)
+        startTimer()
+      //timerUpdate(timer :timer)
       UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
       askQuestion ()
     }
@@ -57,7 +57,7 @@ class GameViewController: UIViewController {
         button4.layer.borderWidth = 3
     }
     func askQuestion(_ action : UIAlertAction! = nil){
-       let newChoice = GameModel.gameShareInstance.finalData.choose(1)
+        let newChoice = GameModel.gameShareInstance.finalData.choose(1)
         print("Here is the choice\(newChoice)")
             var question = newChoice[0]["Choices"] as! [String]
             let randomChoice = question.shuffle()
@@ -71,57 +71,90 @@ class GameViewController: UIViewController {
     func postData(completed: @escaping DownloadCompleted) {
         let parameters : Parameters = [
             "name" : "\(self.textField!.text)",
-            "streak" : 200
+            "streak" : "\(self.current_score)"
         ]
         Alamofire.request("https://from.blubeta.com/api/Players", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
             switch(response.result) {
             case .success(_):
                 if response.result.value != nil{
-                    print(response.result.value as Any)
+                    print("\(response.result.value as Any) sent Here")
                 }
                 break
             case .failure(_):
-                print(response.result.error as Any)
+                print("\(response.result.error as Any) not sent")
                 break
             }
         }
     }
+    func saveScore(){
+     userDefaults.set(current_score, forKey: "Score")
+     userDefaults.synchronize()
+    }
     func submit(_ action : UIAlertAction! = nil){
-        checkScore{
-        self.postData {
-        print("Sent")
-            }
+        postData {
+        self.saveScore()
+        print("Data has been sent")
         }
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
         let vc = storyboard.instantiateViewController(withIdentifier: "nextViewTopPlayer")
         self.present(vc, animated: true, completion: nil)
       }
-    func restart(_ action : UIAlertAction! = nil){
-    let newtimber = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
-    timerUpdate(timer:newtimber)
-    askQuestion()
+    func startTimer() {
+    timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
     }
-    func timerUpdate(timer: Timer){
-        if (count < 0 ){
-        timer.invalidate()
-        ac = UIAlertController(title: title, message: "\(scoreDisplayMessage) \(current_score).", preferredStyle: .alert)
-        ac.addTextField(configurationHandler: configurationTextField)
-        ac.addAction(UIAlertAction(title: "\(restartButtonTitlte)", style: .default, handler: askQuestion))
-        ac.addAction(UIAlertAction(title: "\(submitButtonTitlte)", style: .default, handler: submit))
-        self.present(ac, animated: true, completion: {
+    func endTimer(_ action : UIAlertAction! = nil) {
+    timer.invalidate()
+    }
+    func restartTimer(){
+         endTimer()
+         count = 10
+         self.countL.text = "\(timeFormatted(count))"
+    }
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        return  String(format: "%02d:%02d", minutes, seconds)
+    }
+    func alertViewtoshow(){
+        let checScoreStatus = self.checkScore(completed: {
+            print("Score Has been Checked")
+        })
+        self.ac = UIAlertController(title: self.title, message: "\(scoreDisplayMessage) \(self.current_score)", preferredStyle: .alert)
+        if checScoreStatus == true {
+            self.ac.addTextField(configurationHandler: self.configurationTextField)
+            self.ac.addAction(UIAlertAction(title: "\(submitButtonTitlte)", style: .default, handler: self.submit))
+            self.present(self.ac, animated: true, completion: {
                 print("completion block")
-       })
-       
-        }else{
-            minutes = String(count / 60)
-            seconds = String(count % 60)
-            countL.text = "0\(minutes):0\(seconds)s"
+            })
+        }else {
+            self.ac.addAction(UIAlertAction(title:"\(restartButtonTitlte) again", style: .default, handler: { action in
+                self.restartTimer()
+            }))
+
+           self.present(self.ac, animated: true, completion: {
+            print("completion block")
+           })
+        }
+
+    }
+    func updatetime(){
+    self.countL.text = "\(timeFormatted(count))"
+        if count !=  0 {
             count -= 1
+        }else {
+            timer.invalidate()
+            alertViewtoshow()
         }
     }
-    func checkScore(_: @escaping FuctionFinished){
+    func checkScore(completed: @escaping DownloadCompleted)-> Bool{
         if current_score > 10 {
         self.scoretosend = current_score
+        completed()
+        return true
+        } else {
+        self.scoretosend = current_score
+        completed()
+        return false
         }
     }
     func configurationTextField(textfield: UITextField!){
@@ -139,9 +172,9 @@ class GameViewController: UIViewController {
                 self.current_score += 1
                 self.scoreLabel.text = "Current Streak: \(self.current_score)"
                 GameModel.gameShareInstance.currentStreak =  self.current_score
-                let newtimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
-                timerUpdate(timer: newtimer)
-                askQuestion()
+                startTimer()
+                self.askQuestion()
+                
             }else{
             print("no")
             }

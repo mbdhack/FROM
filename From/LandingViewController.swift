@@ -22,36 +22,49 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var startGame: UIButton!
     
     let score = UserDefaults.standard
+    var scoreData = [String:AnyObject]()
+    var sortedscore = [Int]()
     var instance = GameViewController()
+    
     
     
     // MARK: - life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        APIcall()
-    }
-    override func viewDidAppear(_ animated: Bool) {
+        apIcall()
         
     }
-    func APIcall(){
+    override func viewDidAppear(_ animated: Bool) {
+        retriveData {
+        self.score.set(0, forKey: "Score")
+        self.assigtoLabel()
+        }
+    }
+    func apIcall(){
         GameModel.gameShareInstance.downloadAthlets {
-            GameModel.gameShareInstance.downloadAthletsCollege {
-               
-                GameModel.gameShareInstance.QuestionAnswerStructure()
-                
+        GameModel.gameShareInstance.downloadAthletsCollege {
+        GameModel.gameShareInstance.QuestionAnswerStructure()
             }
         }
     }
-    
-    func retriveData(){
-        //for item in score.value(forKey: "highScore") {
-        
-       // }
-        if let highScore = score.value(forKey: "highScore") {
-           self.highestStreak.text = "\(highScore)"
-        } else {
-           self.latestStreak.text = "\(instance.current_score)"
+    func SortedScore (completed: @escaping DownloadCompleted){
+        if let score = (UserDefaults.standard.dictionary(forKey: "Score")){
+            for score in score {
+                let score = score
+                self.scoreData["score"] = score as AnyObject?
+            }
         }
+    }
+    func retriveData(completed: @escaping DownloadCompleted){
+    SortedScore {
+        for (_,value) in self.scoreData {
+         self.sortedscore.append(value as! Int)
+        }
+    }
+  }
+  func assigtoLabel() {
+     self.highestStreak.text = "Highest Streak:\(self.sortedscore.max())"
+     self.latestStreak.text = "Latest Streak:\(self.sortedscore.min())"
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,8 +78,6 @@ class LandingViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
         let vc = storyboard.instantiateViewController(withIdentifier: "nextView")
         self.present(vc, animated: true, completion: nil)
-        
-        
     }
     
     @IBAction func viewHighScore(_ sender: UIButton) {
