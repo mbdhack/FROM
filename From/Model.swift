@@ -29,7 +29,6 @@ public class GameModel:URLEndpoint {
     var CollegeName: String!
     var highestScore : Int!
     var currentStreak: Int
-    var userSocre = [Int]()
     var dictAthletsResult = [[String:AnyObject]]()
     var collegeNameArray = [AnyObject]()
     var athletesCorrect = [String:String]()
@@ -76,6 +75,7 @@ extension GameModel{
             self.dictFinalData["Name"] = keyCorrectAthlete as AnyObject?
             arrayThreeNumber.append(keyCorrectCollege as AnyObject)
             self.dictFinalData["Choices"] = arrayThreeNumber as AnyObject?
+            self.dictFinalData["correct"] = keyCorrectCollege as AnyObject?
             self.finalData.append(dictFinalData)
         }
     }

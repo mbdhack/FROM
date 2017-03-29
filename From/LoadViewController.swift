@@ -26,7 +26,7 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
          GameModel.gameShareInstance.gettToppalyer{
             self.fecthData()
-            self.tableView.reloadData()
+           // self.tableView.reloadData()
         }
     }
     func fecthData(){
@@ -37,19 +37,16 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
         }
     
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
       return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return name.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell  = tableView.dequeueReusableCell(withIdentifier:topScoreCellIdentifier) as! ScoreTableViewCell
         cell.idLAbel.text = "\(indexPath.row+1)"

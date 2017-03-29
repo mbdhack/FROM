@@ -15,15 +15,11 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var latestStreak: UILabel!
     @IBOutlet weak var highestStreak: UILabel!
     @IBOutlet weak var viewHighScores: UIButton!
-    @IBOutlet weak var guessBySport: UILabel!
-    @IBOutlet weak var nflButon: UIButton!
-    @IBOutlet weak var nbaButton: UIButton!
-    @IBOutlet weak var otherButton: UIButton!
+  
+ 
     @IBOutlet weak var startGame: UIButton!
     
     let score = UserDefaults.standard
-    var scoreData = [String:AnyObject]()
-    var sortedscore = [Int]()
     var instance = GameViewController()
     
     
@@ -32,13 +28,24 @@ class LandingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         apIcall()
-        
+        let result = isKeyPresentInUserDefaults(key:"HighScore")
+        print(result)
+        UIView.animate(withDuration: 3.0, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [], animations: {
+            self.fromLabel.center = CGPoint(x: 100, y: 40+200)
+            self.guessAthleteLAbel.center = CGPoint(x: 100, y: 40+200)
+            self.latestStreak.center = CGPoint(x: 100, y: 40+200)
+            self.highestStreak.center = CGPoint(x: 100, y: 40+200)
+            self.viewHighScores.center = CGPoint(x: 100, y: 40+200)
+            self.guessAthleteLAbel.center = CGPoint(x: 100, y: 40+200)
+            self.startGame.center = CGPoint(x: 100, y: 40+200)
+            
+        }, completion: nil)
+    }
+    func isKeyPresentInUserDefaults(key: String) -> Bool {
+        return UserDefaults.standard.object(forKey: key) != nil
     }
     override func viewDidAppear(_ animated: Bool) {
-        retriveData {
-        self.score.set(0, forKey: "Score")
-        self.assigtoLabel()
-        }
+        SortedScore{}
     }
     func apIcall(){
         GameModel.gameShareInstance.downloadAthlets {
@@ -48,23 +55,16 @@ class LandingViewController: UIViewController {
         }
     }
     func SortedScore (completed: @escaping DownloadCompleted){
-        if let score = (UserDefaults.standard.dictionary(forKey: "Score")){
-            for score in score {
-                let score = score
-                self.scoreData["score"] = score as AnyObject?
-            }
+        if let highscore = score.object(forKey: "HighScore") as? Int{
+            self.highestStreak.font = UIFont.boldSystemFont(ofSize: 19)
+            self.highestStreak.text = "Highest Streak: 18"
+            print("\(highscore)")
         }
-    }
-    func retriveData(completed: @escaping DownloadCompleted){
-    SortedScore {
-        for (_,value) in self.scoreData {
-         self.sortedscore.append(value as! Int)
+        if let latestStreak  = score.object(forKey: "Score") as? Int{
+            self.latestStreak.font = UIFont.boldSystemFont(ofSize: 19)
+            self.latestStreak.text = "Latest Streak: \(latestStreak)"
         }
-    }
-  }
-  func assigtoLabel() {
-     self.highestStreak.text = "Highest Streak:\(self.sortedscore.max())"
-     self.latestStreak.text = "Latest Streak:\(self.sortedscore.min())"
+        
     }
 
     override func didReceiveMemoryWarning() {

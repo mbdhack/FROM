@@ -271,7 +271,9 @@
 				TargetAttributes = {
 					6332A63D1E7896BA0034ABDB = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = EM988J5XHK;
 						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
 					};
 					6332A6541E7896BA0034ABDB = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -461,7 +463,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Davy Ngoma (JPUUZTRRH2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Davy Ngoma (JPUUZTRRH2)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -508,7 +511,8 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Davy Ngoma (JPUUZTRRH2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Davy Ngoma (JPUUZTRRH2)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -535,8 +539,10 @@
 			baseConfigurationReference = C442075668D8E329DD820C59 /* Pods-From.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = EM988J5XHK;
 				INFOPLIST_FILE = From/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = blubeta.From;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -549,8 +555,10 @@
 			baseConfigurationReference = 9E662ADA06AEDC21C58BD2F4 /* Pods-From.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = EM988J5XHK;
 				INFOPLIST_FILE = From/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = blubeta.From;
 				PRODUCT_NAME = "$(TARGET_NAME)";
