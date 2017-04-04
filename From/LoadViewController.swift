@@ -7,40 +7,52 @@
 //
 
 import UIKit
+import Alamofire
 
 class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDataSource{
-
+    
+    // MARK: - OUtlet
     @IBOutlet weak var tableView: UITableView!
-    var playername = String()
+    
+    // MARK: - Properties
     var score = [Int]()
     var name = [String]()
+    var playername = String()
+    var playerscore = String()
+    var instance = TopPlayerAPicall()
     
-    
+    // MARK: - view life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        print(GameModel.gameShareInstance.topPlayerScore)
         tableView.tableFooterView = UIView()
         self.navigationController?.isNavigationBarHidden = false
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-         GameModel.gameShareInstance.gettToppalyer{
-            self.fecthData()
-           // self.tableView.reloadData()
-        }
     }
-    func fecthData(){
-        for item in GameModel.gameShareInstance.topPlayerScore{
-          self.name.append(item.name)
-          self.score.append(item.score)
-          tableView.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        instance.gettToppalyer{
+        self.fecthData()
         }
+        
+    }
     
-    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Fech data from Top Score Endpoint
+    func fecthData(){
+        for item in instance.topPlayerDict{
+            print(item)
+          self.name.append(item["name"] as! String)
+          self.score.append(item["streak"] as! Int)
+          tableView.reloadData()
+        }
+    }
+   
     func numberOfSections(in tableView: UITableView) -> Int {
       return 1
     }
@@ -49,25 +61,18 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
      let cell  = tableView.dequeueReusableCell(withIdentifier:topScoreCellIdentifier) as! ScoreTableViewCell
-        cell.idLAbel.text = "\(indexPath.row+1)"
-        cell.playerName.text = self.name[indexPath.row]
-        cell.score.text = String(self.score[indexPath.row])
+         cell.idLAbel.text = "\(indexPath.row+1)"
+         cell.playerName.text = self.name[indexPath.row]
+         cell.score.text = String(self.score[indexPath.row])
         return cell
     }
+    
+     // MARK: - Action
 
     @IBAction func Back(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
-        let vc = storyboard.instantiateViewController(withIdentifier: "nextView")
+        let vc = storyboard.instantiateViewController(withIdentifier: "Main")
         self.present(vc, animated: true, completion: nil)
-    }
-    /*
-    // MARK: - Navigation
+        }
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
-
-}

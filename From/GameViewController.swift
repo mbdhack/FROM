@@ -37,16 +37,31 @@ class GameViewController: UIViewController {
     var istance = GameModel()
     var scoretosend = 0
     let userDefaults = UserDefaults.standard
+    var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+    var viewLoader = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if GameModel.gameShareInstance.finalData.isEmpty {
+        showIndicator()
+        }else {
+        self.hideIndicator()
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
-        askQuestion ()
         startTimer()
+        askQuestion()
+        self.button1.layer.borderWidth = 1
+        self.button2.layer.borderWidth = 1
+        self.button3.layer.borderWidth = 1
+        self.button4.layer.borderWidth = 1
+        self.button1.layer.borderColor = UIColor.white.cgColor
+        self.button2.layer.borderColor = UIColor.white.cgColor
+        self.button3.layer.borderColor = UIColor.white.cgColor
+        self.button4.layer.borderColor = UIColor.white.cgColor
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(true)
       let buttonArray = [button1,button2,button3,button4]
-     // buttonDesign ()
       buttonSize(button: buttonArray as! [UIButton])
       UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
       
@@ -54,13 +69,28 @@ class GameViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-//    func buttonDesign () {
-//        button1.layer.borderWidth = 3
-//        button2.layer.borderWidth = 3
-//        button3.layer.borderWidth = 3
-//        button4.layer.borderWidth = 3
-//        
-//    }
+    func showIndicator() {
+        DispatchQueue.main.async {
+            self.viewLoader.frame = CGRect(x: 0.0, y: 0.0, width: 200.0, height: 200.0)
+            self.viewLoader.center = self.view.center
+            self.viewLoader.backgroundColor = UIColor.black
+            self.viewLoader.alpha = 0.7
+            self.viewLoader.clipsToBounds = true
+            self.viewLoader.layer.cornerRadius = 10
+            self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+            self.spinner.frame = CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0)
+            self.spinner.center = CGPoint(x:self.viewLoader.bounds.size.width / 2, y:self.viewLoader.bounds.size.height / 2)
+            self.viewLoader.addSubview(self.spinner)
+            self.view.addSubview(self.viewLoader)
+            self.spinner.startAnimating()
+        }
+    }
+    func hideIndicator() {
+     DispatchQueue.main.async {
+    self.spinner.stopAnimating()
+    self.viewLoader.removeFromSuperview()
+        }
+    }
     
     func buttonSize (button : [UIButton]){
         for item in button {
@@ -128,13 +158,18 @@ class GameViewController: UIViewController {
         let seconds: Int = totalSeconds % 60
         return  String(format: "%2d", seconds)
     }
+    func home(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let vc = storyboard.instantiateViewController(withIdentifier: "Main")
+        self.present(vc, animated: true, completion: nil)
+
+    }
     func alertViewtoshow(){
-        self.savedata()
-        endTimer()
         let checScoreStatus = self.checkScore(completed: {
             print("Score Has been Checked")
         })
         if checScoreStatus == true {
+            self.savedata()
             self.ac = UIAlertController(title: self.title, message: "\(scoreDisplayMessage) \(self.current_score)", preferredStyle: .alert)
             self.ac.addTextField(configurationHandler: self.configurationTextField)
             self.ac.addAction(UIAlertAction(title: "😃\(submitButtonTitlte)", style: .default, handler: self.submit))
@@ -142,9 +177,15 @@ class GameViewController: UIViewController {
                 print("completion block")
             })
         }else {
+            self.savedata()
             self.ac = UIAlertController(title: self.title, message: "\(scoreDisplayMessage) \(self.current_score)", preferredStyle: .alert)
+            self.ac.view.layer.cornerRadius = 1
             self.ac.addAction(UIAlertAction(title:"☹️\(restartButtonTitlte)", style: .default, handler: { action in
                 self.restartTimer()
+            }
+            ))
+            self.ac.addAction(UIAlertAction(title:"Home", style: .default, handler: { action in
+                self.home()
             }))
 
            self.present(self.ac, animated: true, completion: {
@@ -158,6 +199,8 @@ class GameViewController: UIViewController {
         print("here:\(highscore)")
         if current_score > highscore {
         userDefaults.set(current_score, forKey: "HighScore")
+        userDefaults.synchronize()
+        }else {
         }
     }
       userDefaults.set(current_score, forKey: "Score")
