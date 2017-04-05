@@ -53,10 +53,10 @@ class GameViewController: UIViewController {
         self.button2.layer.borderWidth = 1
         self.button3.layer.borderWidth = 1
         self.button4.layer.borderWidth = 1
-        self.button1.layer.borderColor = UIColor.white.cgColor
-        self.button2.layer.borderColor = UIColor.white.cgColor
-        self.button3.layer.borderColor = UIColor.white.cgColor
-        self.button4.layer.borderColor = UIColor.white.cgColor
+        self.button1.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
+        self.button2.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
+        self.button3.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
+        self.button4.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -236,14 +236,14 @@ class GameViewController: UIViewController {
         if sender.titleLabel?.text == testresult{
             print("Test")
             current_score += 1
-            self.scoreLabel.text = "\(current_score)"
+            self.scoreLabel.text = "Current Streak:\(current_score)"
             askQuestion()
             restartTimer()
         }else {
         timer.invalidate()
         alertViewtoshow()
         resetScore{
-        self.scoreLabel.text = "0"
+        self.scoreLabel.text = "Current Streak:0"
         }
     }
  }

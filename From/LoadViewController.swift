@@ -20,6 +20,7 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var playername = String()
     var playerscore = String()
     var instance = TopPlayerAPicall()
+    var color = [String]()
     
     // MARK: - view life Cycle
     override func viewDidLoad() {
@@ -29,6 +30,7 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
         tableView.tableFooterView = UIView()
         self.navigationController?.isNavigationBarHidden = false
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+        color = ["282C35","313540"]
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -64,8 +66,14 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
          cell.idLAbel.text = "\(indexPath.row+1)"
          cell.playerName.text = self.name[indexPath.row]
          cell.score.text = String(self.score[indexPath.row])
+    
         return cell
     }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        let randomColor = Int(arc4random_uniform(UInt32(self.color.count)))
+//        cell.contentView.backgroundColor = UIColor(
+//    }
+    
     
      // MARK: - Action
 

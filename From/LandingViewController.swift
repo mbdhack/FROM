@@ -30,13 +30,18 @@ class LandingViewController: UIViewController {
          componementAnimation()
     }
     override func viewWillAppear(_ animated: Bool) {
-        //imageview.loadGif(name: "giphy")
         let result = isKeyPresentInUserDefaults(key:"Score")
         buttonSize(button: [self.viewHighScores,self.startGame])
-        self.startGame.layer.borderColor = UIColor.white.cgColor
-        self.viewHighScores.layer.borderColor = UIColor.white.cgColor
+        self.startGame.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
         self.startGame.layer.borderWidth = 2
-        self.viewHighScores.layer.borderWidth = 2
+        self.viewHighScores.layer.borderWidth = 0
+        let attributedString = NSMutableAttributedString(string:"")
+        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
+                          NSForegroundColorAttributeName : UIColor.yellow,
+                          NSUnderlineStyleAttributeName : 1] as [String : Any]
+        let buttonTitleStr = NSMutableAttributedString(string:"View High Scores", attributes:attributes)
+        attributedString.append(buttonTitleStr)
+        self.viewHighScores.setAttributedTitle(attributedString, for: .normal)
         print(result)
         SortedScore{}
         apIcall()
@@ -46,7 +51,6 @@ class LandingViewController: UIViewController {
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Check UserdDefault key
@@ -97,19 +101,22 @@ class LandingViewController: UIViewController {
             item.titleLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
         }
     }
+    func buttondesign(button : UIButton){
+        
+    }
     
     // MARK: - Action
 
     @IBAction func startGame(_ sender: UIButton) {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil);
-//        let vc = storyboard.instantiateViewController(withIdentifier: "nextView")
-//        self.present(vc, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let vc = storyboard.instantiateViewController(withIdentifier: "nextView")
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func viewHighScore(_ sender: UIButton) {
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil);
-//        let vc = storyboard.instantiateViewController(withIdentifier: "nextViewTopPlayer")
-//        self.present(vc, animated: true, completion: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil);
+        let vc = storyboard.instantiateViewController(withIdentifier: "nextViewTopPlayer")
+        self.present(vc, animated: true, completion: nil)
     }
     
 }
