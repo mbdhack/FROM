@@ -9,10 +9,10 @@
 let startGameSegueIndentifier = "startGame"
 let topScoreCellIdentifier = "topScore"
 typealias DownloadCompleted = () -> ()
+typealias Completed = () -> ()
 typealias FuctionFinished = () -> ()
 let enterYourName = "Enter Your Name"
 let currentStreakString = "Current Streak"
-let scoreDisplayMessage = "Game Over \nYou have achieved a score of :"
 let restartButtonTitlte = "Restart Game"
 let submitButtonTitlte  = "Submit"
 let athleteKeyString = "athlete"

@@ -1,4 +1,4 @@
-//
+ //
 //  LandingViewController.swift
 //  From
 //
@@ -17,20 +17,30 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var highestStreak: UILabel!
     @IBOutlet weak var viewHighScores: UIButton!
     @IBOutlet weak var startGame: UIButton!
-    @IBOutlet weak var imageview: UIImageView!
+    
     
     // MARK: - Properties
-    let score = UserDefaults.standard
+    var scorehigh = UserDefaults.standard
+    var scorelatest = UserDefaults.standard
     var instance = GameViewController()
-    //var attributedString = NSMutableAttributedString(string:"")
+    var test = [Int]()
+    var test2 = [Int]()
+    var Score = HighScore()
     
     // MARK: - view life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
          componementAnimation()
+        definesPresentationContext = true
+        apIcall()
+    
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
     }
     override func viewWillAppear(_ animated: Bool) {
-        let result = isKeyPresentInUserDefaults(key:"Score")
+        _ = isKeyPresentInUserDefaults(key:"Score")
+        //showHighaLatest()
         buttonSize(button: [self.viewHighScores,self.startGame])
         self.startGame.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
         self.startGame.layer.borderWidth = 2
@@ -42,11 +52,16 @@ class LandingViewController: UIViewController {
         let buttonTitleStr = NSMutableAttributedString(string:"View High Scores", attributes:attributes)
         attributedString.append(buttonTitleStr)
         self.viewHighScores.setAttributedTitle(attributedString, for: .normal)
-        print(result)
-        SortedScore{}
-        apIcall()
+       // print(result)
+        showHighScore()
+        showHighaLatest()
+        
+    }
+    func acceptData(data: AnyObject!) {
+       print("\(data)")
     }
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         
     }
     override func didReceiveMemoryWarning() {
@@ -77,20 +92,21 @@ class LandingViewController: UIViewController {
         }, completion: nil)
     }
     
-    // MARK: - Sort UsefDefault Data
-    func SortedScore(completed: @escaping DownloadCompleted) {
-         print(UserDefaults.standard.dictionaryRepresentation().values)
-        if let highscore = score.object(forKey: "HighScore") as? Int{
-            self.highestStreak.font = UIFont.boldSystemFont(ofSize: 19)
-            self.highestStreak.text = "Highest Streak: \(highscore)"
-            print("\(highscore)")
-        }
-        if let latestStreak  = score.object(forKey: "Score") as? Int{
-            self.latestStreak.font = UIFont.boldSystemFont(ofSize: 19)
-            self.latestStreak.text = "Latest Streak: \(latestStreak)"
-             print("\(latestStreak)")
-        }
-        
+    // MARK: - retreive UsefDefault Data
+    func showHighScore() {
+        let highscore = scorehigh.integer(forKey: "HighScoreData")
+        self.highestStreak.font = UIFont.boldSystemFont(ofSize: 19)
+        //self.test2.append(highscore)
+//        print("check high :\(self.test2)")
+        self.highestStreak.text = "Highest Streak: \(highscore)"
+        print("here is the highscore\(highscore)")
+    
+    }
+    func showHighaLatest()  {
+        let latestStreak = scorelatest.integer(forKey: "ScoreData")
+        self.latestStreak.font = UIFont.boldSystemFont(ofSize: 19)
+        self.latestStreak.text = "Latest Streak: \(latestStreak)"
+        print("here is the lateststreak \(latestStreak)")
     }
     
     // MARK: - Button settings

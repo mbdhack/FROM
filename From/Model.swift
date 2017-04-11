@@ -11,16 +11,17 @@ import Alamofire
 
 public class URLEndpoint{
     let baseUrl = "https://from.blubeta.com/api"
-    let atheletsEndpoint = "/Athletes"
-    let atheletsCollegeEndpoint = "/Athletes/colleges"
-    let topPlayerEndPoint = "/Players/top20"
-    let postEndpoint = "/Players"
+    let atheletsEndpoint = "/AthletesNFL"
+    let atheletsCollegeEndpoint = "/AthletesNFL/colleges"
+    let topPlayerEndPoint = "/PlayersNFL"
+    let postEndpoint = "/PlayersNFL"
 
     }
 public class GameModel:URLEndpoint {
     var CollegeName: String!
     var dictAthletsResult = [[String:AnyObject]]()
     var collegeNameArray = [String]()
+    var reducedCollege = [String]()
     var athletesCorrect = [String:String]()
     var finalData = [[String:AnyObject]]()
     var quizData = [String:AnyObject]()
@@ -41,6 +42,7 @@ extension GameModel{
             let result = response.result
             guard result.value as? [[String:AnyObject]] != nil else{return}
                 self.dictAthletsResult = result.value as! [[String : AnyObject]]
+                //print(self.dictAthletsResult)
             completed()
         }
     }
@@ -49,19 +51,21 @@ extension GameModel{
             let result = response.result
             guard result.value as? [String] != nil else{return}
             self.collegeNameArray = result.value as! [String]
+            self.reducedCollege = self.collegeNameArray.choose(400)
             completed()
         }
     }
     func questionAnswerStructure (){
-        for item in dictAthletsResult{
-            var randomArray = self.collegeNameArray.choose(3)
+        let number = self.dictAthletsResult.choose(400)
+        for item in number {
+            var randomArray = self.reducedCollege.choose(3)
             keyCorrectAthlete = item[athleteKeyString] as! String
             keyCorrectCollege = item[correctKeyString] as! String
             randomArray.append(keyCorrectCollege as String)
             self.quizData["Name"] = keyCorrectAthlete as AnyObject
             self.quizData["Choices"] = randomArray as AnyObject
             self.quizData["correct"] = keyCorrectCollege as AnyObject
-            print( keyCorrectAthlete,keyCorrectCollege)
+            //print( keyCorrectAthlete,keyCorrectCollege)
             self.finalData.append(quizData)
             }
         }

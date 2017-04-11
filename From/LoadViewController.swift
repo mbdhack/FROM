@@ -34,6 +34,8 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.automaticallyAdjustsScrollViewInsets = false
+        tableView.contentInset = UIEdgeInsets.zero
         instance.gettToppalyer{
         self.fecthData()
         }
@@ -69,10 +71,9 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
     
         return cell
     }
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        let randomColor = Int(arc4random_uniform(UInt32(self.color.count)))
-//        cell.contentView.backgroundColor = UIColor(
-//    }
+   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        CellAnimator.animateCell(cell, withTransform: CellAnimator.TransformWave, andDuration: 1)
+    }
     
     
      // MARK: - Action

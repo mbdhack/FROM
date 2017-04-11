@@ -12,6 +12,8 @@ import GameplayKit
 import Alamofire
 
 
+
+
 class GameViewController: UIViewController {
     @IBOutlet weak var countL: UILabel!
     @IBOutlet weak var button1: UIButton!
@@ -22,10 +24,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     
     var count = 10
-    var hightScore = 0
     var testresult  = String()
     var timer: Timer!
-    var current_scoreArray = [Int]()
     var textField: UITextField!
     var minutes = String()
     var seconds = String()
@@ -36,9 +36,10 @@ class GameViewController: UIViewController {
     var ac  = UIAlertController()
     var istance = GameModel()
     var scoretosend = 0
-    let userDefaults = UserDefaults.standard
+    var userDefaults = UserDefaults.standard
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var viewLoader = UIView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +65,7 @@ class GameViewController: UIViewController {
       let buttonArray = [button1,button2,button3,button4]
       buttonSize(button: buttonArray as! [UIButton])
       UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-      
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -117,7 +118,8 @@ class GameViewController: UIViewController {
             "name" : self.textField.text! as String,
             "streak" : self.scoretosend
         ]
-        Alamofire.request("https://from.blubeta.com/api/Players", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
+        Alamofire.request("https://from.blubeta.com/api/PlayersNFL", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON {
+            (response:DataResponse<Any>) in
             switch(response.result) {
             case .success(_):
                 if response.result.value != nil{
@@ -139,16 +141,20 @@ class GameViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
       }
     func startTimer() {
-    timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
+        if timer == nil {
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updatetime), userInfo: nil, repeats: false)
+        }
     }
     func endTimer() {
-    timer.invalidate()
+        if timer != nil {
+         timer.invalidate()
+        }
     }
     func restartTimer(){
-         endTimer()
-         count = 10
-         self.countL.text = "\(timeFormatted(self.count))"
-         askQuestion()
+//        endTimer()
+        count = 10
+        self.countL.text = "\(timeFormatted(self.count))"
+        askQuestion()
     }
     func resetScore(completed: @escaping DownloadCompleted){
     current_score = 0
@@ -159,69 +165,54 @@ class GameViewController: UIViewController {
         return  String(format: "%2d", seconds)
     }
     func home(){
-        let storyboard = UIStoryboard(name: "Main", bundle: nil);
-        let vc = storyboard.instantiateViewController(withIdentifier: "Main")
-        self.present(vc, animated: true, completion: nil)
-
+        let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "Main") as! LandingViewController
+        self.present(destinationVC, animated: true, completion: nil)
     }
     func alertViewtoshow(){
-        let checScoreStatus = self.checkScore(completed: {
-            print("Score Has been Checked")
-        })
-        if checScoreStatus == true {
-            self.savedata()
-            self.ac = UIAlertController(title: self.title, message: "\(scoreDisplayMessage) \(self.current_score)", preferredStyle: .alert)
-            self.ac.addTextField(configurationHandler: self.configurationTextField)
-            self.ac.addAction(UIAlertAction(title: "😃\(submitButtonTitlte)", style: .default, handler: self.submit))
-            self.present(self.ac, animated: true, completion: {
-                print("completion block")
-            })
-        }else {
-            self.savedata()
-            self.ac = UIAlertController(title: self.title, message: "\(scoreDisplayMessage) \(self.current_score)", preferredStyle: .alert)
-            self.ac.view.layer.cornerRadius = 1
-            self.ac.addAction(UIAlertAction(title:"☹️\(restartButtonTitlte)", style: .default, handler: { action in
-                self.restartTimer()
-            }
-            ))
-            self.ac.addAction(UIAlertAction(title:"Home", style: .default, handler: { action in
+//        self.saveLatest()
+        userDefaults.set(current_score, forKey: "ScoreData")
+        self.savehighscore()
+        let checScoreStatus = self.checkScore()
+            if checScoreStatus == true {
+                self.ac = UIAlertController(title: self.title, message: "Game Over \nYou have achieved a score of: \(self.current_score)", preferredStyle: .alert)
+                self.ac.addTextField(configurationHandler: self.configurationTextField)
+                self.ac.addAction(UIAlertAction(title: "\(submitButtonTitlte)", style: .default, handler: self.submit))
+                self.present(self.ac, animated: true, completion: {
+                    
+                })
+            }else {
+                self.ac = UIAlertController(title: self.title, message: "Game Over \nYour score is: \(self.current_score)", preferredStyle: .alert)
+                self.ac.view.layer.cornerRadius = 1
+                self.ac.addAction(UIAlertAction(title:"Home", style: .default, handler: { action in
                 self.home()
-            }))
-
-           self.present(self.ac, animated: true, completion: {
-            print("completion block")
-           })
-        }
-
+                 }))
+                self.present(self.ac, animated: true, completion: {
+                    print("completion block")
+                })
+            }
     }
-    func savedata(){
-      if let highscore = userDefaults.object(forKey: "Score") as? Int{
-        print("here:\(highscore)")
+    func savehighscore(){
+        var highscore = userDefaults.integer(forKey: "HighScoreData")
         if current_score > highscore {
-        userDefaults.set(current_score, forKey: "HighScore")
-        userDefaults.synchronize()
-        }else {
+            highscore = current_score
+            userDefaults.set(highscore, forKey: "HighScoreData")
+            userDefaults.synchronize()
         }
     }
-      userDefaults.set(current_score, forKey: "Score")
-      userDefaults.synchronize()
-  }
     func updatetime(){
     self.countL.text = "\(timeFormatted(count))"
         if count !=  0 {
             count -= 1
         }else {
-            timer.invalidate()
+            endTimer()
             alertViewtoshow()
         }
     }
-    func checkScore(completed: @escaping DownloadCompleted)-> Bool{
+    func checkScore()-> Bool{
         if current_score > 10 {
         self.scoretosend = current_score
-        completed()
         return true
         } else {
-        completed()
         return false
         }
     }
@@ -240,10 +231,10 @@ class GameViewController: UIViewController {
             askQuestion()
             restartTimer()
         }else {
-        timer.invalidate()
-        alertViewtoshow()
-        resetScore{
-        self.scoreLabel.text = "Current Streak:0"
+            endTimer()
+            self.alertViewtoshow()
+            resetScore{
+            self.scoreLabel.text = "Current Streak:0"
         }
     }
  }

@@ -21,7 +21,7 @@ class TopPlayerAPicall {
     var topPlayerScore = [Score]()
     
     func gettToppalyer(completed: @escaping DownloadCompleted){
-        Alamofire.request("https://from.blubeta.com/api/Players/top20").responseJSON { response in
+        Alamofire.request("https://from.blubeta.com/api/PlayersNFL").responseJSON { response in
             let result = response.result
             //print(result.value as? [[String:AnyObject]] as Any)
             guard (result.value as? [[String:AnyObject]]) != nil else{return}

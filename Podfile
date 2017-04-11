@@ -3,5 +3,6 @@ use_frameworks!
 
 target 'From' do
   pod 'Alamofire', '~> 4.4'
-
+  pod 'PMAlertController'
+  
 end
