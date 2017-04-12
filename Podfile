@@ -4,5 +4,7 @@ use_frameworks!
 target 'From' do
   pod 'Alamofire', '~> 4.4'
   pod 'PMAlertController'
+  pod 'SCLAlertView'
+  pod 'PopupDialog', '~> 0.5'
   
 end

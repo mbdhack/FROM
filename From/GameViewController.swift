@@ -10,6 +10,8 @@ import UIKit
 import SpriteKit
 import GameplayKit
 import Alamofire
+import SCLAlertView
+import PopupDialog
 
 
 
@@ -50,14 +52,15 @@ class GameViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
         startTimer()
         askQuestion()
-        self.button1.layer.borderWidth = 1
-        self.button2.layer.borderWidth = 1
-        self.button3.layer.borderWidth = 1
-        self.button4.layer.borderWidth = 1
-        self.button1.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
-        self.button2.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
-        self.button3.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
-        self.button4.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
+        self.button1.layer.borderWidth = 3
+        self.button2.layer.borderWidth = 3
+        self.button3.layer.borderWidth = 3
+        self.button4.layer.borderWidth = 3
+        self.button1.layer.borderColor = UIColor.orange.cgColor
+        self.button2.layer.borderColor = UIColor.orange.cgColor
+        self.button3.layer.borderColor = UIColor.orange.cgColor
+        self.button4.layer.borderColor = UIColor.orange.cgColor
+        self.scoreLabel.textColor = UIColor.orange
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -164,12 +167,11 @@ class GameViewController: UIViewController {
         let seconds: Int = totalSeconds % 60
         return  String(format: "%2d", seconds)
     }
-    func home(){
-        let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "Main") as! LandingViewController
-        self.present(destinationVC, animated: true, completion: nil)
-    }
+//    func home(){
+//        let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "Main") as! LandingViewController
+//        self.present(destinationVC, animated: true, completion: nil)
+//    }
     func alertViewtoshow(){
-//        self.saveLatest()
         userDefaults.set(current_score, forKey: "ScoreData")
         self.savehighscore()
         let checScoreStatus = self.checkScore()
@@ -178,17 +180,19 @@ class GameViewController: UIViewController {
                 self.ac.addTextField(configurationHandler: self.configurationTextField)
                 self.ac.addAction(UIAlertAction(title: "\(submitButtonTitlte)", style: .default, handler: self.submit))
                 self.present(self.ac, animated: true, completion: {
-                    
                 })
             }else {
-                self.ac = UIAlertController(title: self.title, message: "Game Over \nYour score is: \(self.current_score)", preferredStyle: .alert)
-                self.ac.view.layer.cornerRadius = 1
-                self.ac.addAction(UIAlertAction(title:"Home", style: .default, handler: { action in
-                self.home()
-                 }))
-                self.present(self.ac, animated: true, completion: {
-                    print("completion block")
-                })
+                let title = "GAME OVER"
+                let message = "Your score is: \(self.current_score)"
+                let popup = PopupDialog(title: title, message: message, buttonAlignment: .horizontal, transitionStyle: .zoomIn, gestureDismissal: false) {
+                    print("Completed")
+                }
+                let buttonOne = DefaultButton(title: "HOME") {
+                    let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "Main") as! LandingViewController
+                    self.present(destinationVC, animated: true, completion: nil)
+                }
+                popup.addButtons([buttonOne])
+                self.present(popup, animated: true, completion: nil)
             }
     }
     func savehighscore(){

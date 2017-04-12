@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		630B09151E9BF93600C0A427 /* ModelCore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 630B09131E9BF93600C0A427 /* ModelCore.xcdatamodeld */; };
 		6319896A1E820CB700AF84AE /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 631989691E820CB700AF84AE /* Data.json */; };
 		6319896C1E8210C600AF84AE /* LoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6319896B1E8210C600AF84AE /* LoadViewController.swift */; };
 		631B1FED1E79CC06009E09CF /* CONSTANTSTRINGS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631B1FEC1E79CC06009E09CF /* CONSTANTSTRINGS.swift */; };
@@ -16,12 +15,10 @@
 		63259C151E969E5F000CEF41 /* CellAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63259C141E969E5F000CEF41 /* CellAnimator.swift */; };
 		632FDB311E8C1D1000BCEAF8 /* TopScoreApiCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632FDB301E8C1D1000BCEAF8 /* TopScoreApiCall.swift */; };
 		6332A6421E7896BA0034ABDB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6332A6411E7896BA0034ABDB /* AppDelegate.swift */; };
-		6332A64A1E7896BA0034ABDB /* From.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6332A6481E7896BA0034ABDB /* From.xcdatamodeld */; };
 		6332A64C1E7896BA0034ABDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6332A64B1E7896BA0034ABDB /* Assets.xcassets */; };
 		6332A64F1E7896BA0034ABDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6332A64D1E7896BA0034ABDB /* LaunchScreen.storyboard */; };
 		6332A65A1E7896BA0034ABDB /* FromTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6332A6591E7896BA0034ABDB /* FromTests.swift */; };
 		6332A6651E7896BA0034ABDB /* FromUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6332A6641E7896BA0034ABDB /* FromUITests.swift */; };
-		63A2B74F1E8E95940015F26F /* giphy.gif in Resources */ = {isa = PBXBuildFile; fileRef = 63A2B74E1E8E95940015F26F /* giphy.gif */; };
 		63A2B7511E8E96360015F26F /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A2B7501E8E96360015F26F /* UIImage+Gif.swift */; };
 		63AFBAA91E843F8F0067AA6A /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AFBAA81E843F8F0067AA6A /* ScoreTableViewCell.swift */; };
 		63AFBAAB1E845AA50067AA6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63AFBAAA1E845AA50067AA6A /* Main.storyboard */; };
@@ -48,7 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		630B09141E9BF93600C0A427 /* ModelCore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelCore.xcdatamodel; sourceTree = "<group>"; };
 		631989691E820CB700AF84AE /* Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Data.json; sourceTree = "<group>"; };
 		6319896B1E8210C600AF84AE /* LoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadViewController.swift; sourceTree = "<group>"; };
 		631B1FEC1E79CC06009E09CF /* CONSTANTSTRINGS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CONSTANTSTRINGS.swift; sourceTree = "<group>"; };
@@ -58,7 +54,6 @@
 		632FDB301E8C1D1000BCEAF8 /* TopScoreApiCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopScoreApiCall.swift; sourceTree = "<group>"; };
 		6332A63E1E7896BA0034ABDB /* From.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = From.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6332A6411E7896BA0034ABDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6332A6491E7896BA0034ABDB /* From.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = From.xcdatamodel; sourceTree = "<group>"; };
 		6332A64B1E7896BA0034ABDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6332A64E1E7896BA0034ABDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6332A6501E7896BA0034ABDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,7 +63,6 @@
 		6332A6601E7896BA0034ABDB /* FromUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FromUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6332A6641E7896BA0034ABDB /* FromUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromUITests.swift; sourceTree = "<group>"; };
 		6332A6661E7896BA0034ABDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		63A2B74E1E8E95940015F26F /* giphy.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = giphy.gif; sourceTree = "<group>"; };
 		63A2B7501E8E96360015F26F /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		63AFBAA81E843F8F0067AA6A /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
 		63AFBAAA1E845AA50067AA6A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -116,9 +110,7 @@
 		6332A6351E7896BA0034ABDB = {
 			isa = PBXGroup;
 			children = (
-				630B09131E9BF93600C0A427 /* ModelCore.xcdatamodeld */,
 				6332A6401E7896BA0034ABDB /* From */,
-				63A2B74E1E8E95940015F26F /* giphy.gif */,
 				6332A6581E7896BA0034ABDB /* FromTests */,
 				6332A6631E7896BA0034ABDB /* FromUITests */,
 				6332A63F1E7896BA0034ABDB /* Products */,
@@ -147,7 +139,6 @@
 				63AFBAAA1E845AA50067AA6A /* Main.storyboard */,
 				6332A64D1E7896BA0034ABDB /* LaunchScreen.storyboard */,
 				6332A6501E7896BA0034ABDB /* Info.plist */,
-				6332A6481E7896BA0034ABDB /* From.xcdatamodeld */,
 				63B0E8821E7ACF1800F86E14 /* DataModel */,
 				63B0E8811E7ACF0A00F86E14 /* ViewControllers */,
 				63B0E8831E7ACF2700F86E14 /* CONSTANT */,
@@ -332,7 +323,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63A2B74F1E8E95940015F26F /* giphy.gif in Resources */,
 				6332A64F1E7896BA0034ABDB /* LaunchScreen.storyboard in Resources */,
 				6332A64C1E7896BA0034ABDB /* Assets.xcassets in Resources */,
 				6319896A1E820CB700AF84AE /* Data.json in Resources */,
@@ -412,11 +402,9 @@
 				63AFBAA91E843F8F0067AA6A /* ScoreTableViewCell.swift in Sources */,
 				631BE9E71E7B9EC40033DDBF /* AppusCircleTimer.swift in Sources */,
 				631B1FED1E79CC06009E09CF /* CONSTANTSTRINGS.swift in Sources */,
-				630B09151E9BF93600C0A427 /* ModelCore.xcdatamodeld in Sources */,
 				63A2B7511E8E96360015F26F /* UIImage+Gif.swift in Sources */,
 				63259C151E969E5F000CEF41 /* CellAnimator.swift in Sources */,
 				6319896C1E8210C600AF84AE /* LoadViewController.swift in Sources */,
-				6332A64A1E7896BA0034ABDB /* From.xcdatamodeld in Sources */,
 				63EFBE631E78CCEA00BEC7E7 /* LandingViewController.swift in Sources */,
 				63B0E8801E7ACCD700F86E14 /* Model.swift in Sources */,
 				632FDB311E8C1D1000BCEAF8 /* TopScoreApiCall.swift in Sources */,
@@ -563,8 +551,8 @@
 			baseConfigurationReference = C442075668D8E329DD820C59 /* Pods-From.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Blubeta, LLC (F5EWEFXXF4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Blubeta, LLC (F5EWEFXXF4)";
 				DEVELOPMENT_TEAM = F5EWEFXXF4;
 				INFOPLIST_FILE = From/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -572,6 +560,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = blubeta.FromNFL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -580,8 +569,8 @@
 			baseConfigurationReference = 9E662ADA06AEDC21C58BD2F4 /* Pods-From.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Blubeta, LLC (F5EWEFXXF4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Blubeta, LLC (F5EWEFXXF4)";
 				DEVELOPMENT_TEAM = F5EWEFXXF4;
 				INFOPLIST_FILE = From/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -589,6 +578,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = blubeta.FromNFL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -684,29 +674,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		630B09131E9BF93600C0A427 /* ModelCore.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				630B09141E9BF93600C0A427 /* ModelCore.xcdatamodel */,
-			);
-			currentVersion = 630B09141E9BF93600C0A427 /* ModelCore.xcdatamodel */;
-			path = ModelCore.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		6332A6481E7896BA0034ABDB /* From.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				6332A6491E7896BA0034ABDB /* From.xcdatamodel */,
-			);
-			currentVersion = 6332A6491E7896BA0034ABDB /* From.xcdatamodel */;
-			path = From.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 6332A6361E7896BA0034ABDB /* Project object */;
 }

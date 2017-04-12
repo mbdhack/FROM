@@ -25,7 +25,6 @@ class LandingViewController: UIViewController {
     var instance = GameViewController()
     var test = [Int]()
     var test2 = [Int]()
-    var Score = HighScore()
     
     // MARK: - view life Cycle
     override func viewDidLoad() {
@@ -40,19 +39,16 @@ class LandingViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         _ = isKeyPresentInUserDefaults(key:"Score")
-        //showHighaLatest()
         buttonSize(button: [self.viewHighScores,self.startGame])
-        self.startGame.layer.borderColor = UIColor.init(red: 253, green: 95, blue: 0, alpha: 1).cgColor
-        self.startGame.layer.borderWidth = 2
+        self.startGame.layer.borderColor = UIColor.orange.cgColor
+        self.startGame.layer.borderWidth = 4
         self.viewHighScores.layer.borderWidth = 0
         let attributedString = NSMutableAttributedString(string:"")
-        let attributes = [NSFontAttributeName : UIFont.systemFont(ofSize: 14.0),
-                          NSForegroundColorAttributeName : UIColor.yellow,
+        let attributes = [NSForegroundColorAttributeName : UIColor.orange,
                           NSUnderlineStyleAttributeName : 1] as [String : Any]
         let buttonTitleStr = NSMutableAttributedString(string:"View High Scores", attributes:attributes)
         attributedString.append(buttonTitleStr)
         self.viewHighScores.setAttributedTitle(attributedString, for: .normal)
-       // print(result)
         showHighScore()
         showHighaLatest()
         
@@ -95,16 +91,12 @@ class LandingViewController: UIViewController {
     // MARK: - retreive UsefDefault Data
     func showHighScore() {
         let highscore = scorehigh.integer(forKey: "HighScoreData")
-        self.highestStreak.font = UIFont.boldSystemFont(ofSize: 19)
-        //self.test2.append(highscore)
-//        print("check high :\(self.test2)")
         self.highestStreak.text = "Highest Streak: \(highscore)"
         print("here is the highscore\(highscore)")
     
     }
     func showHighaLatest()  {
         let latestStreak = scorelatest.integer(forKey: "ScoreData")
-        self.latestStreak.font = UIFont.boldSystemFont(ofSize: 19)
         self.latestStreak.text = "Latest Streak: \(latestStreak)"
         print("here is the lateststreak \(latestStreak)")
     }

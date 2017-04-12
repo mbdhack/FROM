@@ -72,7 +72,7 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
         return cell
     }
    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        CellAnimator.animateCell(cell, withTransform: CellAnimator.TransformWave, andDuration: 1)
+        CellAnimator.animateCell(cell, withTransform: CellAnimator.TransformWave, andDuration: 0)
     }
     
     
