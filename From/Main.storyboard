@@ -355,19 +355,19 @@
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.15686274510000001" green="0.17254901959999999" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="ECv-mX-DbI" secondAttribute="trailing" constant="38" id="34W-pY-e0q"/>
-                                                        <constraint firstAttribute="bottom" secondItem="ECv-mX-DbI" secondAttribute="bottom" constant="10" id="E6y-iT-UM5"/>
-                                                        <constraint firstItem="ECv-mX-DbI" firstAttribute="top" secondItem="Elr-aE-FFk" secondAttribute="top" constant="11" id="UWm-7V-JLA"/>
-                                                        <constraint firstItem="ECv-mX-DbI" firstAttribute="leading" secondItem="Elr-aE-FFk" secondAttribute="leading" constant="37" id="UxT-sm-rLS"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ECv-mX-DbI" secondAttribute="trailing" constant="38" id="6Jw-jG-LTZ"/>
+                                                        <constraint firstItem="ECv-mX-DbI" firstAttribute="top" secondItem="Elr-aE-FFk" secondAttribute="top" constant="11" id="D91-17-4fK"/>
+                                                        <constraint firstItem="ECv-mX-DbI" firstAttribute="leading" secondItem="Elr-aE-FFk" secondAttribute="leading" constant="37" id="M38-Fk-mJw"/>
+                                                        <constraint firstAttribute="bottom" secondItem="ECv-mX-DbI" secondAttribute="bottom" constant="10" id="uu7-ak-aeW"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" red="0.19215686269999999" green="0.20784313730000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstItem="Elr-aE-FFk" firstAttribute="top" secondItem="6Zq-Bl-np7" secondAttribute="top" constant="8" id="0Ab-Sl-2wP"/>
-                                                <constraint firstAttribute="bottom" secondItem="Elr-aE-FFk" secondAttribute="bottom" constant="8" id="G5Y-c2-1IS"/>
-                                                <constraint firstAttribute="trailing" secondItem="Elr-aE-FFk" secondAttribute="trailing" constant="8" id="KDh-0D-KTf"/>
-                                                <constraint firstItem="Elr-aE-FFk" firstAttribute="leading" secondItem="6Zq-Bl-np7" secondAttribute="leading" constant="8" id="kk9-6N-nQJ"/>
+                                                <constraint firstItem="Elr-aE-FFk" firstAttribute="leading" secondItem="6Zq-Bl-np7" secondAttribute="leadingMargin" id="32p-QX-Qln"/>
+                                                <constraint firstItem="Elr-aE-FFk" firstAttribute="top" secondItem="6Zq-Bl-np7" secondAttribute="topMargin" id="Jas-j2-bjM"/>
+                                                <constraint firstItem="Elr-aE-FFk" firstAttribute="trailing" secondItem="6Zq-Bl-np7" secondAttribute="trailingMargin" id="eAg-fS-9Dn"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Elr-aE-FFk" secondAttribute="bottom" constant="1" id="hBC-Gf-yfx"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

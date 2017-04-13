@@ -25,24 +25,25 @@ class GameViewController: UIViewController {
     @IBOutlet weak var playerName: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     
+    //MARk: store properties
     var count = 10
-    var testresult  = String()
+    var correctResponse = String()
     var timer: Timer!
     var textField: UITextField!
     var minutes = String()
     var seconds = String()
     var newChoice = [[String:AnyObject]]()
     var collegeNameRandomPicked = [[String]]()
-    var new  = [String]()
     var current_score = 0
     var ac  = UIAlertController()
-    var istance = GameModel()
+    var instance = GameModel()
     var scoretosend = 0
     var userDefaults = UserDefaults.standard
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
     var viewLoader = UIView()
 
     
+    //MARk: View Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         if GameModel.gameShareInstance.finalData.isEmpty {
@@ -52,15 +53,7 @@ class GameViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
         startTimer()
         askQuestion()
-        self.button1.layer.borderWidth = 3
-        self.button2.layer.borderWidth = 3
-        self.button3.layer.borderWidth = 3
-        self.button4.layer.borderWidth = 3
-        self.button1.layer.borderColor = UIColor.orange.cgColor
-        self.button2.layer.borderColor = UIColor.orange.cgColor
-        self.button3.layer.borderColor = UIColor.orange.cgColor
-        self.button4.layer.borderColor = UIColor.orange.cgColor
-        self.scoreLabel.textColor = UIColor.orange
+        buttondesign()
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -73,6 +66,8 @@ class GameViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    //MARk: Indicator loading animation and view
     func showIndicator() {
         DispatchQueue.main.async {
             self.viewLoader.frame = CGRect(x: 0.0, y: 0.0, width: 200.0, height: 200.0)
@@ -96,6 +91,7 @@ class GameViewController: UIViewController {
         }
     }
     
+    // MARK: Button Design
     func buttonSize (button : [UIButton]){
         for item in button {
         item.titleLabel!.numberOfLines = 1
@@ -103,19 +99,34 @@ class GameViewController: UIViewController {
         item.titleLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
         }
     }
+    func buttondesign(){
+        self.button1.layer.borderWidth = 3
+        self.button2.layer.borderWidth = 3
+        self.button3.layer.borderWidth = 3
+        self.button4.layer.borderWidth = 3
+        self.button1.layer.borderColor = UIColor.orange.cgColor
+        self.button2.layer.borderColor = UIColor.orange.cgColor
+        self.button3.layer.borderColor = UIColor.orange.cgColor
+        self.button4.layer.borderColor = UIColor.orange.cgColor
+        self.scoreLabel.textColor = UIColor.orange
+    }
+    
+    // MARK: Question Algorythm
     func askQuestion(){
         newChoice = GameModel.gameShareInstance.finalData.choose(1)
         print("Here is the choice\(newChoice)")
             var question = newChoice[0]["Choices"] as! [String]
             let randomChoice = question.shuffle()
             let name = newChoice[0]["Name"] as! String!
-            testresult = newChoice[0]["correct"] as! String!
+            correctResponse = newChoice[0]["correct"] as! String!
             self.playerName.text = name
             button1.setTitle(randomChoice[0], for: UIControlState.normal)
             button2.setTitle(randomChoice[1], for: UIControlState.normal)
             button3.setTitle(randomChoice[2], for: UIControlState.normal)
             button4.setTitle(randomChoice[3], for: UIControlState.normal)
     }
+    
+    // MARK: Server Post Data
     func postData(completed: @escaping DownloadCompleted) {
         let parameters : Parameters = [
             "name" : self.textField.text! as String,
@@ -135,6 +146,8 @@ class GameViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: Action fuction
     func submit(_ action : UIAlertAction! = nil){
         postData {
         print("Data has been sent")
@@ -143,6 +156,15 @@ class GameViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: "nextViewTopPlayer")
         self.present(vc, animated: true, completion: nil)
       }
+    func updatetime(){
+        self.countL.text = "\(timeFormatted(count))"
+        if count !=  0 {
+            count -= 1
+        }else {
+            endTimer()
+            alertViewtoshow()
+        }
+    }
     func startTimer() {
         if timer == nil {
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updatetime), userInfo: nil, repeats: false)
@@ -154,12 +176,11 @@ class GameViewController: UIViewController {
         }
     }
     func restartTimer(){
-//        endTimer()
         count = 10
         self.countL.text = "\(timeFormatted(self.count))"
         askQuestion()
     }
-    func resetScore(completed: @escaping DownloadCompleted){
+    func resetScore(completed: @escaping Completed){
     current_score = 0
     completed()
     }
@@ -167,10 +188,25 @@ class GameViewController: UIViewController {
         let seconds: Int = totalSeconds % 60
         return  String(format: "%2d", seconds)
     }
-//    func home(){
-//        let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "Main") as! LandingViewController
-//        self.present(destinationVC, animated: true, completion: nil)
-//    }
+    func savehighscore(){
+        var highscore = userDefaults.integer(forKey: "HighScoreData")
+        if current_score > highscore {
+            highscore = current_score
+            userDefaults.set(highscore, forKey: "HighScoreData")
+            userDefaults.synchronize()
+        }
+    }
+    
+    func checkScore()-> Bool{
+        if current_score > 10 {
+            self.scoretosend = current_score
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // MARK: Alert Controller
     func alertViewtoshow(){
         userDefaults.set(current_score, forKey: "ScoreData")
         self.savehighscore()
@@ -195,31 +231,8 @@ class GameViewController: UIViewController {
                 self.present(popup, animated: true, completion: nil)
             }
     }
-    func savehighscore(){
-        var highscore = userDefaults.integer(forKey: "HighScoreData")
-        if current_score > highscore {
-            highscore = current_score
-            userDefaults.set(highscore, forKey: "HighScoreData")
-            userDefaults.synchronize()
-        }
-    }
-    func updatetime(){
-    self.countL.text = "\(timeFormatted(count))"
-        if count !=  0 {
-            count -= 1
-        }else {
-            endTimer()
-            alertViewtoshow()
-        }
-    }
-    func checkScore()-> Bool{
-        if current_score > 10 {
-        self.scoretosend = current_score
-        return true
-        } else {
-        return false
-        }
-    }
+    
+    //MARk: alertView text configuration
     func configurationTextField(textfield: UITextField?){
         textfield?.placeholder = enterYourName
         if let unwrapped = textfield {
@@ -227,8 +240,9 @@ class GameViewController: UIViewController {
         }
     }
     
+    //MARk: Button Action
     @IBAction func mainButton(_ sender: UIButton) {
-        if sender.titleLabel?.text == testresult{
+        if sender.titleLabel?.text == correctResponse{
             print("Test")
             current_score += 1
             self.scoreLabel.text = "Current Streak:\(current_score)"

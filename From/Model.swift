@@ -18,7 +18,7 @@ public class URLEndpoint{
 
     }
 public class GameModel:URLEndpoint {
-    var CollegeName: String!
+    var collegeName: String!
     var dictAthletsResult = [[String:AnyObject]]()
     var collegeNameArray = [String]()
     var reducedCollege = [String]()
@@ -30,7 +30,7 @@ public class GameModel:URLEndpoint {
     var keyCorrectCollege = String()
     static var gameShareInstance = GameModel()
     override init() {
-      CollegeName = ""
+      collegeName = ""
       }
     }
 extension GameModel{
@@ -42,7 +42,6 @@ extension GameModel{
             let result = response.result
             guard result.value as? [[String:AnyObject]] != nil else{return}
                 self.dictAthletsResult = result.value as! [[String : AnyObject]]
-                //print(self.dictAthletsResult)
             completed()
         }
     }
@@ -65,7 +64,6 @@ extension GameModel{
             self.quizData["Name"] = keyCorrectAthlete as AnyObject
             self.quizData["Choices"] = randomArray as AnyObject
             self.quizData["correct"] = keyCorrectCollege as AnyObject
-            //print( keyCorrectAthlete,keyCorrectCollege)
             self.finalData.append(quizData)
             }
         }

@@ -39,14 +39,11 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
         instance.gettToppalyer{
         self.fecthData()
         }
-        
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     // MARK: - Fech data from Top Score Endpoint
     func fecthData(){
         for item in instance.topPlayerDict{
@@ -56,7 +53,6 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
           tableView.reloadData()
         }
     }
-   
     func numberOfSections(in tableView: UITableView) -> Int {
       return 1
     }
@@ -68,16 +64,12 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
          cell.idLAbel.text = "\(indexPath.row+1)"
          cell.playerName.text = self.name[indexPath.row]
          cell.score.text = String(self.score[indexPath.row])
-    
-        return cell
+     return cell
     }
-   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         CellAnimator.animateCell(cell, withTransform: CellAnimator.TransformWave, andDuration: 0)
     }
-    
-    
-     // MARK: - Action
-
+    // MARK: - Action
     @IBAction func Back(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
         let vc = storyboard.instantiateViewController(withIdentifier: "Main")
@@ -85,3 +77,28 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
         }
 
     }
+
+
+extension Dictionary {
+    func sortedKeys(isOrderedBefore:(Key,Key) -> Bool) -> [Key] {
+        return Array(self.keys).sorted(by: isOrderedBefore)
+    }
+    func sortedKeysByValue(isOrderedBefore:(Value, Value) -> Bool) -> [Key] {
+        return sortedKeys {
+            isOrderedBefore(self[$0]!, self[$1]!)
+        }
+    }
+    func keysSortedByValue(isOrderedBefore:(Value, Value) -> Bool) -> [Key] {
+        return Array(self)
+            .sorted() {
+                let (_, lv) = $0
+                let (_, rv) = $1
+                return isOrderedBefore(lv, rv)
+            }
+            .map {
+                let (k, _) = $0
+                return k
+        }
+    }
+}
+

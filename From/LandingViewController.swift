@@ -32,34 +32,24 @@ class LandingViewController: UIViewController {
          componementAnimation()
         definesPresentationContext = true
         apIcall()
-    
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         _ = isKeyPresentInUserDefaults(key:"Score")
         buttonSize(button: [self.viewHighScores,self.startGame])
-        self.startGame.layer.borderColor = UIColor.orange.cgColor
-        self.startGame.layer.borderWidth = 4
-        self.viewHighScores.layer.borderWidth = 0
-        let attributedString = NSMutableAttributedString(string:"")
-        let attributes = [NSForegroundColorAttributeName : UIColor.orange,
-                          NSUnderlineStyleAttributeName : 1] as [String : Any]
-        let buttonTitleStr = NSMutableAttributedString(string:"View High Scores", attributes:attributes)
-        attributedString.append(buttonTitleStr)
-        self.viewHighScores.setAttributedTitle(attributedString, for: .normal)
+        buttondesign()
         showHighScore()
         showHighaLatest()
-        
     }
-    func acceptData(data: AnyObject!) {
-       print("\(data)")
-    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -75,6 +65,7 @@ class LandingViewController: UIViewController {
             }
         }
     }
+   
     // MARK: - Animation
     func componementAnimation(){
         UIView.animate(withDuration: 3.0, delay: 0.5, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.0, options: [], animations: {
@@ -109,12 +100,19 @@ class LandingViewController: UIViewController {
             item.titleLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
         }
     }
-    func buttondesign(button : UIButton){
-        
+    func buttondesign(){
+        self.startGame.layer.borderColor = UIColor.orange.cgColor
+        self.startGame.layer.borderWidth = 4
+        self.viewHighScores.layer.borderWidth = 0
+        let attributedString = NSMutableAttributedString(string:"")
+        let attributes = [NSForegroundColorAttributeName : UIColor.orange,
+                          NSUnderlineStyleAttributeName : 1] as [String : Any]
+        let buttonTitleStr = NSMutableAttributedString(string:"View High Scores", attributes:attributes)
+        attributedString.append(buttonTitleStr)
+        self.viewHighScores.setAttributedTitle(attributedString, for: .normal)
     }
     
     // MARK: - Action
-
     @IBAction func startGame(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil);
         let vc = storyboard.instantiateViewController(withIdentifier: "nextView")
