@@ -1,4 +1,5 @@
- //
+
+//
 //  LandingViewController.swift
 //  From
 //
@@ -25,6 +26,8 @@ class LandingViewController: UIViewController {
     var instance = GameViewController()
     var test = [Int]()
     var test2 = [Int]()
+    var athleteNames = [String]()
+    var correctAnswer = [[String:String]]()
     
     // MARK: - view life Cycle
     override func viewDidLoad() {
@@ -44,6 +47,10 @@ class LandingViewController: UIViewController {
         buttondesign()
         showHighScore()
         showHighaLatest()
+        let data =  ResponseServiceMock.mockGroupDetails()
+        for item in data! {
+            print(item.college)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

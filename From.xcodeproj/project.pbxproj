@@ -21,6 +21,9 @@
 		63AFBAAB1E845AA50067AA6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63AFBAAA1E845AA50067AA6A /* Main.storyboard */; };
 		63B0E8801E7ACCD700F86E14 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B0E87F1E7ACCD700F86E14 /* Model.swift */; };
 		63EFBE631E78CCEA00BEC7E7 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EFBE621E78CCEA00BEC7E7 /* LandingViewController.swift */; };
+		694AE3F820C36C5F00F927E2 /* Data.json in Resources */ = {isa = PBXBuildFile; fileRef = 694AE3F720C36C5F00F927E2 /* Data.json */; };
+		694AE3FA20C36CA000F927E2 /* PlayerInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694AE3F920C36CA000F927E2 /* PlayerInfoModel.swift */; };
+		694AE3FC20C3802600F927E2 /* ResponseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694AE3FB20C3802600F927E2 /* ResponseService.swift */; };
 		9DADE6FC5F68C7A3AEDBD80E /* Pods_From.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE6EDAAFFB02708D41E0E87 /* Pods_From.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +65,9 @@
 		63AFBAAA1E845AA50067AA6A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		63B0E87F1E7ACCD700F86E14 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		63EFBE621E78CCEA00BEC7E7 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
+		694AE3F720C36C5F00F927E2 /* Data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Data.json; path = ../../Downloads/Data.json; sourceTree = "<group>"; };
+		694AE3F920C36CA000F927E2 /* PlayerInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInfoModel.swift; sourceTree = "<group>"; };
+		694AE3FB20C3802600F927E2 /* ResponseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseService.swift; sourceTree = "<group>"; };
 		9E662ADA06AEDC21C58BD2F4 /* Pods-From.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-From.release.xcconfig"; path = "Pods/Target Support Files/Pods-From/Pods-From.release.xcconfig"; sourceTree = "<group>"; };
 		BBE6EDAAFFB02708D41E0E87 /* Pods_From.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_From.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C442075668D8E329DD820C59 /* Pods-From.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-From.debug.xcconfig"; path = "Pods/Target Support Files/Pods-From/Pods-From.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,11 +137,13 @@
 				63AFBAAA1E845AA50067AA6A /* Main.storyboard */,
 				6332A64D1E7896BA0034ABDB /* LaunchScreen.storyboard */,
 				6332A6501E7896BA0034ABDB /* Info.plist */,
+				694AE3F720C36C5F00F927E2 /* Data.json */,
 				63B0E8821E7ACF1800F86E14 /* DataModel */,
 				63B0E8811E7ACF0A00F86E14 /* ViewControllers */,
 				63B0E8831E7ACF2700F86E14 /* CONSTANT */,
 				63AB30381E9E725B00F59F6D /* TableViewCell */,
 				63A2B6CB1E8DB3F20015F26F /* APIcall */,
+				694AE3FB20C3802600F927E2 /* ResponseService.swift */,
 			);
 			path = From;
 			sourceTree = "<group>";
@@ -189,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				63B0E87F1E7ACCD700F86E14 /* Model.swift */,
+				694AE3F920C36CA000F927E2 /* PlayerInfoModel.swift */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -325,6 +334,7 @@
 				6332A64F1E7896BA0034ABDB /* LaunchScreen.storyboard in Resources */,
 				6332A64C1E7896BA0034ABDB /* Assets.xcassets in Resources */,
 				63AFBAAB1E845AA50067AA6A /* Main.storyboard in Resources */,
+				694AE3F820C36C5F00F927E2 /* Data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,9 +412,11 @@
 				63259C151E969E5F000CEF41 /* CellAnimator.swift in Sources */,
 				6319896C1E8210C600AF84AE /* LoadViewController.swift in Sources */,
 				63EFBE631E78CCEA00BEC7E7 /* LandingViewController.swift in Sources */,
+				694AE3FA20C36CA000F927E2 /* PlayerInfoModel.swift in Sources */,
 				63B0E8801E7ACCD700F86E14 /* Model.swift in Sources */,
 				632FDB311E8C1D1000BCEAF8 /* TopScoreApiCall.swift in Sources */,
 				631B1FF11E79D4C8009E09CF /* GameViewController.swift in Sources */,
+				694AE3FC20C3802600F927E2 /* ResponseService.swift in Sources */,
 				6332A6421E7896BA0034ABDB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

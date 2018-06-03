@@ -9,15 +9,15 @@
 import Foundation
 import Alamofire
 
-public class URLEndpoint{
-    let baseUrl = "https://from.blubeta.com/api"
-    let atheletsEndpoint = "/AthletesNFL"
-    let atheletsCollegeEndpoint = "/AthletesNFL/colleges"
-    let topPlayerEndPoint = "/PlayersNFL"
-    let postEndpoint = "/PlayersNFL"
-
-    }
-public class GameModel:URLEndpoint {
+//public class URLEndpoint{
+//    let baseUrl = "https://from.blubeta.com/api"
+//    let atheletsEndpoint = "/AthletesNFL"
+//    let atheletsCollegeEndpoint = "/AthletesNFL/colleges"
+//    let topPlayerEndPoint = "/PlayersNFL"
+//    let postEndpoint = "/PlayersNFL"
+//
+//    }
+public class GameModel {
     var collegeName: String!
     var dictAthletsResult = [[String:AnyObject]]()
     var collegeNameArray = [String]()

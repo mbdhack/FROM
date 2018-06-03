@@ -61,6 +61,7 @@ class GameViewController: UIViewController {
       let buttonArray = [button1,button2,button3,button4]
       buttonSize(button: buttonArray as! [UIButton])
       UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+  
         
     }
     override func didReceiveMemoryWarning() {
@@ -69,20 +70,20 @@ class GameViewController: UIViewController {
     
     //MARk: Indicator loading animation and view
     func showIndicator() {
-        DispatchQueue.main.async {
-            self.viewLoader.frame = CGRect(x: 0.0, y: 0.0, width: 200.0, height: 200.0)
-            self.viewLoader.center = self.view.center
-            self.viewLoader.backgroundColor = UIColor.black
-            self.viewLoader.alpha = 0.7
-            self.viewLoader.clipsToBounds = true
-            self.viewLoader.layer.cornerRadius = 10
-            self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
-            self.spinner.frame = CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0)
-            self.spinner.center = CGPoint(x:self.viewLoader.bounds.size.width / 2, y:self.viewLoader.bounds.size.height / 2)
-            self.viewLoader.addSubview(self.spinner)
-            self.view.addSubview(self.viewLoader)
-            self.spinner.startAnimating()
-        }
+//        DispatchQueue.main.async {
+//            self.viewLoader.frame = CGRect(x: 0.0, y: 0.0, width: 200.0, height: 200.0)
+//            self.viewLoader.center = self.view.center
+//            self.viewLoader.backgroundColor = UIColor.black
+//            self.viewLoader.alpha = 0.7
+//            self.viewLoader.clipsToBounds = true
+//            self.viewLoader.layer.cornerRadius = 10
+//            self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
+//            self.spinner.frame = CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0)
+//            self.spinner.center = CGPoint(x:self.viewLoader.bounds.size.width / 2, y:self.viewLoader.bounds.size.height / 2)
+//            self.viewLoader.addSubview(self.spinner)
+//            self.view.addSubview(self.viewLoader)
+//            self.spinner.startAnimating()
+//        }
     }
     func hideIndicator() {
      DispatchQueue.main.async {
