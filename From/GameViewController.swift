@@ -36,7 +36,7 @@ class GameViewController: UIViewController {
     var collegeNameRandomPicked = [[String]]()
     var current_score = 0
     var ac  = UIAlertController()
-    var instance = GameModel()
+    //var instance = GameModel()
     var scoretosend = 0
     var userDefaults = UserDefaults.standard
     var spinner = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
@@ -45,24 +45,24 @@ class GameViewController: UIViewController {
     
     //MARk: View Cycle
     override func viewDidLoad() {
-        super.viewDidLoad()
-        if GameModel.gameShareInstance.finalData.isEmpty {
-        showIndicator()
-        }else {
-        self.hideIndicator()
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
-        startTimer()
-        askQuestion()
-        buttondesign()
-        }
+//        super.viewDidLoad()
+//        //if GameModel.gameShareInstance.finalData.isEmpty {
+//        showIndicator()
+//        }else {
+//        self.hideIndicator()
+//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
+//        startTimer()
+//        askQuestion()
+//        buttondesign()
+//        }
     }
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(true)
-      let buttonArray = [button1,button2,button3,button4]
-      buttonSize(button: buttonArray as! [UIButton])
-      UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-  
-        
+//     // let buttonArray = [button1,button2,button3,button4]
+//      buttonSize(button: buttonArray as! [UIButton])
+//      UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
+//
+//
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -112,20 +112,20 @@ class GameViewController: UIViewController {
         self.scoreLabel.textColor = UIColor.orange
     }
     
-    // MARK: Question Algorythm
-    func askQuestion(){
-        newChoice = GameModel.gameShareInstance.finalData.choose(1)
-        print("Here is the choice\(newChoice)")
-            var question = newChoice[0]["Choices"] as! [String]
-            let randomChoice = question.shuffle()
-            let name = newChoice[0]["Name"] as! String!
-            correctResponse = newChoice[0]["correct"] as! String!
-            self.playerName.text = name
-            button1.setTitle(randomChoice[0], for: UIControlState.normal)
-            button2.setTitle(randomChoice[1], for: UIControlState.normal)
-            button3.setTitle(randomChoice[2], for: UIControlState.normal)
-            button4.setTitle(randomChoice[3], for: UIControlState.normal)
-    }
+//    // MARK: Question Algorythm
+//    func askQuestion(){
+//        newChoice = GameModel.gameShareInstance.finalData.choose(1)
+//        print("Here is the choice\(newChoice)")
+//            var question = newChoice[0]["Choices"] as! [String]
+//            let randomChoice = question.shuffle()
+//            let name = newChoice[0]["Name"] as! String!
+//            correctResponse = newChoice[0]["correct"] as! String!
+//            self.playerName.text = name
+//            button1.setTitle(randomChoice[0], for: UIControlState.normal)
+//            button2.setTitle(randomChoice[1], for: UIControlState.normal)
+//            button3.setTitle(randomChoice[2], for: UIControlState.normal)
+//            button4.setTitle(randomChoice[3], for: UIControlState.normal)
+//    }
     
     // MARK: Server Post Data
     func postData(completed: @escaping DownloadCompleted) {
@@ -179,7 +179,7 @@ class GameViewController: UIViewController {
     func restartTimer(){
         count = 10
         self.countL.text = "\(timeFormatted(self.count))"
-        askQuestion()
+       // askQuestion()
     }
     func resetScore(completed: @escaping Completed){
     current_score = 0
@@ -247,7 +247,7 @@ class GameViewController: UIViewController {
             print("Test")
             current_score += 1
             self.scoreLabel.text = "Current Streak:\(current_score)"
-            askQuestion()
+         //   askQuestion()
             restartTimer()
         }else {
             endTimer()

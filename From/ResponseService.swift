@@ -10,7 +10,7 @@ import Foundation
 
 class ResponseServiceMock {
 
-class func mockGroupDetails() ->[PLayersModel]? {
+class func mockPlayer() ->[PLayersModel]? {
     var result = [PLayersModel]()
     guard let path = Bundle.main.path(forResource: "Data", ofType: "json") else {
         return result
@@ -21,7 +21,6 @@ class func mockGroupDetails() ->[PLayersModel]? {
         let jsonDecoder = JSONDecoder()
         let rm = try jsonDecoder.decode([PLayersModel].self, from: data)
         result = rm
-        
         return result
     } catch {
         print(error)

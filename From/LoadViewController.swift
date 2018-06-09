@@ -19,7 +19,7 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
     var name = [String]()
     var playername = String()
     var playerscore = String()
-    var instance = TopPlayerAPicall()
+   // var instance = TopPlayerAPicall()
     var color = [String]()
     
     // MARK: - view life Cycle
@@ -36,9 +36,9 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
         super.viewWillAppear(true)
         self.automaticallyAdjustsScrollViewInsets = false
         tableView.contentInset = UIEdgeInsets.zero
-        instance.gettToppalyer{
-        self.fecthData()
-        }
+      //  instance.gettToppalyer{
+//        self.fecthData()
+//        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -46,12 +46,12 @@ class LoadViewController: UIViewController , UITableViewDelegate , UITableViewDa
     }
     // MARK: - Fech data from Top Score Endpoint
     func fecthData(){
-        for item in instance.topPlayerDict{
-            print(item)
-          self.name.append(item["name"] as! String)
-          self.score.append(item["streak"] as! Int)
-          tableView.reloadData()
-        }
+//        for item in instance.topPlayerDict{
+//            print(item)
+//          self.name.append(item["name"] as! String)
+//          self.score.append(item["streak"] as! Int)
+//          tableView.reloadData()
+//        }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
       return 1

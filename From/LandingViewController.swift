@@ -26,6 +26,7 @@ class LandingViewController: UIViewController {
     var instance = GameViewController()
     var test = [Int]()
     var test2 = [Int]()
+    var data  = [PLayersModel]()
     var athleteNames = [String]()
     var correctAnswer = [[String:String]]()
     
@@ -34,7 +35,7 @@ class LandingViewController: UIViewController {
         super.viewDidLoad()
          componementAnimation()
         definesPresentationContext = true
-        apIcall()
+        //apIcall()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -47,10 +48,7 @@ class LandingViewController: UIViewController {
         buttondesign()
         showHighScore()
         showHighaLatest()
-        let data =  ResponseServiceMock.mockGroupDetails()
-        for item in data! {
-            print(item.college)
-        }
+        self.data = ResponseServiceMock.mockPlayer()!
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,13 +63,13 @@ class LandingViewController: UIViewController {
     func isKeyPresentInUserDefaults(key: String) -> Bool {
         return UserDefaults.standard.object(forKey: key) != nil
     }
-    func apIcall(){
-        GameModel.gameShareInstance.downloadAthlets {
-        GameModel.gameShareInstance.downloadAthletsCollege {
-        GameModel.gameShareInstance.questionAnswerStructure()
-            }
-        }
-    }
+//    func apIcall(){
+//        GameModel.gameShareInstance.downloadAthlets {
+//        GameModel.gameShareInstance.downloadAthletsCollege {
+//        GameModel.gameShareInstance.questionAnswerStructure()
+//            }
+//        }
+//    }
    
     // MARK: - Animation
     func componementAnimation(){
