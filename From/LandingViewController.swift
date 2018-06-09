@@ -48,7 +48,9 @@ class LandingViewController: UIViewController {
         buttondesign()
         showHighScore()
         showHighaLatest()
-        self.data = ResponseServiceMock.mockPlayer()!
+        GameModel.gameShareInstance.getCollegeName()
+        GameModel.gameShareInstance.questionAnswerStructure()
+        print(GameModel.gameShareInstance.finalData)
     }
     
     override func viewDidAppear(_ animated: Bool) {

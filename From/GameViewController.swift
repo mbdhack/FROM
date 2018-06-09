@@ -45,16 +45,17 @@ class GameViewController: UIViewController {
     
     //MARk: View Cycle
     override func viewDidLoad() {
-//        super.viewDidLoad()
-//        //if GameModel.gameShareInstance.finalData.isEmpty {
-//        showIndicator()
-//        }else {
-//        self.hideIndicator()
-//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
-//        startTimer()
-//        askQuestion()
-//        buttondesign()
-//        }
+        super.viewDidLoad()
+        if GameModel.gameShareInstance.finalData.isEmpty {
+        showIndicator()
+        }else {
+        self.hideIndicator()
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updatetime), userInfo: nil, repeats: true)
+        startTimer()
+        askQuestion()
+        buttondesign()
+        
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
       super.viewDidAppear(true)
@@ -113,19 +114,19 @@ class GameViewController: UIViewController {
     }
     
 //    // MARK: Question Algorythm
-//    func askQuestion(){
-//        newChoice = GameModel.gameShareInstance.finalData.choose(1)
-//        print("Here is the choice\(newChoice)")
-//            var question = newChoice[0]["Choices"] as! [String]
-//            let randomChoice = question.shuffle()
-//            let name = newChoice[0]["Name"] as! String!
-//            correctResponse = newChoice[0]["correct"] as! String!
-//            self.playerName.text = name
-//            button1.setTitle(randomChoice[0], for: UIControlState.normal)
-//            button2.setTitle(randomChoice[1], for: UIControlState.normal)
-//            button3.setTitle(randomChoice[2], for: UIControlState.normal)
-//            button4.setTitle(randomChoice[3], for: UIControlState.normal)
-//    }
+    func askQuestion(){
+        newChoice = GameModel.gameShareInstance.finalData.choose(1)
+        print("Here is the choice\(newChoice)")
+            var question = newChoice[0]["Choices"] as! [String]
+            let name = newChoice[0]["Name"] as! String!
+            let correct = newChoice[0]["correct"] as! String!
+            let randomChoice = question.shuffle()
+            self.playerName.text = name
+            button1.setTitle(randomChoice[0], for: UIControlState.normal)
+            button2.setTitle(randomChoice[1], for: UIControlState.normal)
+            button3.setTitle(randomChoice[2], for: UIControlState.normal)
+            button4.setTitle(randomChoice[3], for: UIControlState.normal)
+    }
     
     // MARK: Server Post Data
     func postData(completed: @escaping DownloadCompleted) {

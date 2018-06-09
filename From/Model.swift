@@ -6,7 +6,7 @@
 ////  Copyright © 2017 Mac user. All rights reserved.
 ////
 //
-//import Foundation
+import Foundation
 //import Alamofire
 //
 ////public class URLEndpoint{
@@ -18,22 +18,24 @@
 ////
 ////    }
 public class GameModel {
-    var collegeName: String!
-    var dictAthletsResult = [[String:AnyObject]]()
-    var collegeNameArray = [String]()
-    var reducedCollege = [String]()
-    var athletesCorrect = [String:String]()
+//    var collegeName: String!
+//    var dictAthletsResult = [[String:AnyObject]]()
+      var collegeNameArray = [AnyObject]()
+//    var reducedCollege = [String]()
+//    var athletesCorrect = [String:String]()
     var finalData = [[String:AnyObject]]()
     var quizData = [String:AnyObject]()
-    var topPlayerDict = [[String:AnyObject]]()
-    var keyCorrectAthlete = String ()
-    var keyCorrectCollege = String()
+//    var topPlayerDict = [[String:AnyObject]]()
+//    var keyCorrectAthlete = String ()
+//    var keyCorrectCollege = String()
+    var data  = [PLayersModel]()
     static var gameShareInstance = GameModel()
-    override init() {
-      collegeName = ""
-      }
+//    var gamemodel = [[String:]]
+//    override init() {
+//      collegeName = ""
+//      }
     }
-//extension GameModel{
+extension GameModel{
 //    func apiCallUrl (baseUrl:String,endPoint:String)-> String{
 //        return ("\(baseUrl)\(endPoint)")
 //    }
@@ -54,7 +56,19 @@ public class GameModel {
 //            completed()
 //        }
 //    }
-//    func questionAnswerStructure (){
+    func getCollegeName(){
+        self.data = ResponseServiceMock.mockPlayer()!
+        for item in data {
+         self.collegeNameArray.append(item.college as AnyObject)
+        }
+    }
+    func questionAnswerStructure (){
+        for item in data {
+            self.quizData["Name"] = item.full_name as AnyObject
+            self.quizData["correct"] = item.college as AnyObject
+            self.quizData["Choices"] = self.collegeNameArray.choose(4) as AnyObject
+            self.finalData.append(quizData)
+        }
 //        let number = self.dictAthletsResult.choose(400)
 //        for item in number {
 //            var randomArray = self.reducedCollege.choose(3)
@@ -64,23 +78,22 @@ public class GameModel {
 //            self.quizData["Name"] = keyCorrectAthlete as AnyObject
 //            self.quizData["Choices"] = randomArray as AnyObject
 //            self.quizData["correct"] = keyCorrectCollege as AnyObject
-//            self.finalData.append(quizData)
-//            }
-//        }
-//    }
-//extension Array {
-//    var shuffled: Array {
-//        var elements = self
-//        return elements.shuffle()
-//    }
-//    @discardableResult
-//    mutating func shuffle() -> Array {
-//        indices.dropLast().forEach {
-//            guard case let index = Int(arc4random_uniform(UInt32(count - $0))) + $0, index != $0 else { return }
-//            swap(&self[$0], &self[index])
-//        }
-//        return self
-//    }
-//    func choose(_ n: Int) -> Array { return Array(shuffled.prefix(n)) }
-//}
 //
+//            }
+        }
+    }
+extension Array {
+    var shuffled: Array {
+        var elements = self
+        return elements.shuffle()
+    }
+    @discardableResult
+    mutating func shuffle() -> Array {
+        indices.dropLast().forEach {
+        guard case let index = Int(arc4random_uniform(UInt32(count - $0))) + $0, index != $0 else { return }
+           self.swapAt($0, index)
+        }
+        return self
+    }
+    func choose(_ n: Int) -> Array { return Array(shuffled.prefix(n)) }
+}
